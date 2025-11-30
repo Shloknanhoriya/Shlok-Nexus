@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { Play, Music2 } from "lucide-react";
+import { Play, Music2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Music = () => {
@@ -8,6 +8,27 @@ const Music = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+
+  const tracks = [
+    { name: "MyTrack", path: "/audio/MyTrack.mp3" },
+    { name: "Track", path: "/audio/Track.mp3" },
+  ];
+
+  const currentTrack = tracks[currentTrackIndex];
+
+  useEffect(() => {
+    if (audioRef.current) {
+      const wasPlaying = isPlaying;
+      audioRef.current.src = currentTrack.path;
+      audioRef.current.load();
+      if (wasPlaying) {
+        audioRef.current.play().catch(() => {
+          setIsPlaying(false);
+        });
+      }
+    }
+  }, [currentTrackIndex, currentTrack.path, isPlaying]);
 
   const togglePlayback = () => {
     if (!audioRef.current) return;
@@ -17,6 +38,26 @@ const Music = () => {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
+  };
+
+  const handlePreviousTrack = () => {
+    const wasPlaying = isPlaying;
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    const newIndex = currentTrackIndex === 0 ? tracks.length - 1 : currentTrackIndex - 1;
+    setCurrentTrackIndex(newIndex);
+    setIsPlaying(wasPlaying);
+  };
+
+  const handleNextTrack = () => {
+    const wasPlaying = isPlaying;
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    const newIndex = currentTrackIndex === tracks.length - 1 ? 0 : currentTrackIndex + 1;
+    setCurrentTrackIndex(newIndex);
+    setIsPlaying(wasPlaying);
   };
 
   return (
@@ -44,24 +85,46 @@ const Music = () => {
             <div className="bg-card/50 backdrop-blur-sm rounded-2xl border border-border/50 overflow-hidden shadow-elegant">
               <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative group">
                 <div className="absolute inset-0 bg-gradient-glow opacity-30" />
-                <div className="relative z-10 text-center space-y-4">
-                  <Music2 className="h-20 w-20 text-primary mx-auto animate-float" />
-                  <p className="text-lg text-muted-foreground">Music Player Demo</p>
+                <div className="relative z-10 w-full flex items-center justify-center gap-4">
                   <Button
-                    variant="hero"
-                    size="lg"
-                    className="group-hover:scale-105 transition-transform"
-                    onClick={togglePlayback}
+                    variant="ghost"
+                    size="icon"
+                    className="h-12 w-12 rounded-full hover:bg-primary/20 transition-colors"
+                    onClick={handlePreviousTrack}
                   >
-                    <Play className="h-5 w-5 mr-2" />
-                    {isPlaying ? "Pause Track" : "Play Track"}
+                    <ChevronLeft className="h-6 w-6" />
+                  </Button>
+                  <div className="text-center space-y-4">
+                    <Music2 className="h-20 w-20 text-primary mx-auto animate-float" />
+                    <p className="text-lg text-muted-foreground">Music Player Demo</p>
+                    <p className="text-sm text-primary/80">{currentTrack.name}</p>
+                    <Button
+                      variant="hero"
+                      size="lg"
+                      className="group-hover:scale-105 transition-transform"
+                      onClick={togglePlayback}
+                    >
+                      <Play className="h-5 w-5 mr-2" />
+                      {isPlaying ? "Pause Track" : "Play Track"}
+                    </Button>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-12 w-12 rounded-full hover:bg-primary/20 transition-colors"
+                    onClick={handleNextTrack}
+                  >
+                    <ChevronRight className="h-6 w-6" />
                   </Button>
                   <audio
                     ref={audioRef}
-                    src="/audio/MyTrack.mp3"
+                    src={currentTrack.path}
                     preload="auto"
                     className="hidden"
-                    onEnded={() => setIsPlaying(false)}
+                    onEnded={() => {
+                      setIsPlaying(false);
+                      handleNextTrack();
+                    }}
                   />
                 </div>
               </div>
