@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const Certificates = () => {
   const ref = useRef(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const certificates = [
@@ -110,6 +112,21 @@ const Certificates = () => {
 
   const [showMore, setShowMore] = useState(false);
 
+  const allCertificates = [...certificates, ...moreCertificates];
+  const visibleCertificates = showMore ? allCertificates : certificates;
+
+  const handleToggleShowMore = () => {
+    const wasShowingMore = showMore;
+    setShowMore((prev) => !prev);
+    
+    // If collapsing, scroll to button after a brief delay to allow DOM update
+    if (wasShowingMore && buttonRef.current) {
+      setTimeout(() => {
+        buttonRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
+  };
+
   return (
     <section id="certificates" className="py-24 bg-muted/30">
       <div className="container mx-auto px-6">
@@ -131,7 +148,7 @@ const Certificates = () => {
           </p>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {certificates.map((item, index) => (
+            {visibleCertificates.map((item, index) => (
               <Dialog key={item.title + item.year}>
                 <DialogTrigger asChild>
                   <motion.div
@@ -170,78 +187,13 @@ const Certificates = () => {
                 </DialogContent>
               </Dialog>
             ))}
-
-            {/* More/Fewer Certificates card filling the row */}
-            <motion.button
-              type="button"
-              onClick={() => setShowMore((prev) => !prev)}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ delay: certificates.length * 0.1, duration: 0.5 }}
-              className="cursor-pointer bg-card/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all hover:shadow-card flex flex-col text-left"
-            >
-              <div className="relative overflow-hidden aspect-video">
-                <div className="w-full h-full bg-gradient-primary opacity-40" />
-              </div>
-              <div className="p-5 flex-1 flex flex-col">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-semibold">
-                    {showMore ? "Show fewer certificates" : "Show more certificates"}
-                  </h3>
-                  <span className="text-xs text-primary bg-primary/10 px-2 py-1 rounded-full">
-                    {showMore ? "-" : "+"}
-                  </span>
-                </div>
-                <p className="text-sm text-muted-foreground mb-2">
-                  {showMore
-                    ? "Hide the additional certificates and courses."
-                    : "Click to view more certificates and courses."}
-                </p>
-              </div>
-            </motion.button>
           </div>
 
-          {showMore && (
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mt-8">
-              {moreCertificates.map((item, index) => (
-                <Dialog key={item.title + item.year}>
-                  <DialogTrigger asChild>
-                    <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                      transition={{ delay: index * 0.1, duration: 0.5 }}
-                      className="cursor-pointer bg-card/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-border/50 hover:border-primary/50 transition-all hover:shadow-card flex flex-col"
-                    >
-                      <div className="relative overflow-hidden aspect-video">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-card via-card/60 to-transparent" />
-                      </div>
-                      <div className="p-5 flex-1 flex flex-col">
-                        <div className="flex items-center justify-between mb-2">
-                          <h3 className="text-lg font-semibold">{item.title}</h3>
-                          <span className="text-xs text-primary bg-primary/10 px-2 py-1 rounded-full">
-                            {item.year}
-                          </span>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-2">
-                          {item.issuer}
-                        </p>
-                      </div>
-                    </motion.div>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-3xl">
-                    <img
-                      src={item.image}
-                      alt={`${item.title} full view`}
-                      className="w-full h-auto object-contain max-h-[80vh]"
-                    />
-                  </DialogContent>
-                </Dialog>
-              ))}
+          {allCertificates.length > certificates.length && (
+            <div ref={buttonRef} className="text-center mt-8">
+              <Button variant="glass" onClick={handleToggleShowMore}>
+                {showMore ? "Show fewer certificates" : "Show more certificates"}
+              </Button>
             </div>
           )}
         </motion.div>

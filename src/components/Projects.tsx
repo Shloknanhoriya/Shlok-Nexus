@@ -10,6 +10,7 @@ type ProjectCategory = "All" | "AI" | "Web" | "Music" | "ML";
 
 const Projects = () => {
   const ref = useRef(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [filter, setFilter] = useState<ProjectCategory>("All");
   const [showAll, setShowAll] = useState(false);
@@ -17,6 +18,18 @@ const Projects = () => {
   const handleFilterChange = (category: ProjectCategory) => {
     setFilter(category);
     setShowAll(false);
+  };
+
+  const handleToggleShowAll = () => {
+    const wasShowingAll = showAll;
+    setShowAll((prev) => !prev);
+    
+    // If collapsing, scroll to button after a brief delay to allow DOM update
+    if (wasShowingAll && buttonRef.current) {
+      setTimeout(() => {
+        buttonRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 100);
+    }
   };
 
   const projects = [
@@ -189,8 +202,8 @@ const Projects = () => {
           </div>
 
           {filter === "All" && filteredProjects.length > 4 && (
-            <div className="text-center mt-8">
-              <Button variant="glass" onClick={() => setShowAll((prev) => !prev)}>
+            <div ref={buttonRef} className="text-center mt-8">
+              <Button variant="glass" onClick={handleToggleShowAll}>
                 {showAll ? "Show fewer projects" : "Show more projects"}
               </Button>
             </div>

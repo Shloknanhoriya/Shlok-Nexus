@@ -8,46 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 220 20% 98%;
-    --foreground: 220 15% 15%;
+    --background: 220 25% 96%;
+    --foreground: 220 20% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 220 20% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 220 20% 12%;
 
     --primary: 195 100% 50%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 195 100% 65%;
 
-    --secondary: 280 70% 60%;
+    --secondary: 280 75% 65%;
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 170 80% 50%;
+    --accent: 170 85% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --muted: 220 15% 90%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 220 20% 92%;
+    --muted-foreground: 220 15% 40%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 85%;
-    --input: 220 15% 85%;
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
     --ring: 195 100% 50%;
 
     --radius: 1rem;
 
-    /* Gradient tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(195 100% 50%), hsl(280 70% 60%));
-    --gradient-accent: linear-gradient(90deg, hsl(170 80% 50%), hsl(195 100% 50%));
-    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(195 100% 65% / 0.3), transparent 70%);
+    /* Enhanced Gradient tokens for light mode */
+    --gradient-primary: linear-gradient(135deg, hsl(195 100% 50%), hsl(280 75% 65%), hsl(320 80% 70%));
+    --gradient-accent: linear-gradient(90deg, hsl(170 85% 55%), hsl(195 100% 50%), hsl(220 100% 60%));
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(195 100% 70% / 0.4), hsl(280 75% 70% / 0.2), transparent 70%);
+    --gradient-soft: linear-gradient(180deg, hsl(220 30% 98%), hsl(220 25% 96%));
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(220 20% 98%));
 
-    /* Shadow tokens */
-    --shadow-glow: 0 0 40px hsl(195 100% 50% / 0.3);
-    --shadow-elegant: 0 10px 40px hsl(220 25% 8% / 0.1);
-    --shadow-card: 0 4px 20px hsl(220 25% 8% / 0.08);
+    /* Enhanced Shadow tokens for light mode */
+    --shadow-glow: 0 0 50px hsl(195 100% 50% / 0.4), 0 0 30px hsl(280 75% 65% / 0.3);
+    --shadow-elegant: 0 10px 50px hsl(220 20% 20% / 0.15), 0 4px 20px hsl(195 100% 50% / 0.1);
+    --shadow-card: 0 8px 30px hsl(220 20% 20% / 0.12), 0 2px 10px hsl(195 100% 50% / 0.08);
+    --shadow-hover: 0 12px 40px hsl(220 20% 20% / 0.18), 0 4px 15px hsl(195 100% 50% / 0.12);
   }
 
   .dark {
@@ -99,5 +102,35 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    background-image: 
+      radial-gradient(circle at 20% 50%, hsl(195 100% 50% / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, hsl(280 75% 65% / 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, hsl(170 85% 55% / 0.02) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-soft {
+    background-image: var(--gradient-soft);
+  }
+  
+  .bg-gradient-card {
+    background-image: var(--gradient-card);
+  }
+  
+  .shadow-hover {
+    box-shadow: var(--shadow-hover);
+  }
+  
+  .text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .border-gradient {
+    border-image: var(--gradient-primary) 1;
   }
 }

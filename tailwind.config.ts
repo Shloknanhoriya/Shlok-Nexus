@@ -53,11 +53,14 @@ export default {
         "gradient-primary": "var(--gradient-primary)",
         "gradient-accent": "var(--gradient-accent)",
         "gradient-glow": "var(--gradient-glow)",
+        "gradient-soft": "var(--gradient-soft)",
+        "gradient-card": "var(--gradient-card)",
       },
       boxShadow: {
         glow: "var(--shadow-glow)",
         elegant: "var(--shadow-elegant)",
         card: "var(--shadow-card)",
+        hover: "var(--shadow-hover)",
       },
       borderRadius: {
         lg: "var(--radius)",
