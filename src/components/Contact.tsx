@@ -19,7 +19,7 @@ export default function Contact() {
       id: "instagram",
       name: "Instagram",
       icon: <Instagram size={24} />,
-      href: "https://www.instagram.com/shloknanhoriya_/",
+      href: "https://www.instagram.com/musician_shlok/",
     },
     {
       id: "email",

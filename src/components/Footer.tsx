@@ -45,7 +45,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-3">Get In Touch</h4>
             <p className="text-muted-foreground text-sm mb-2">
-              Email: shlok@example.com
+              Email: nanhoriyashlok@gmail.com
             </p>
             <p className="text-muted-foreground text-sm">
               Based in India
