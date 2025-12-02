@@ -1,5 +1,5 @@
-import React from "react";
-import { Github, Linkedin, Instagram, Mail } from "lucide-react"; // if using lucide-react icons
+import React, { useState } from "react";
+import { Github, Linkedin, Instagram, Mail } from "lucide-react";
 
 export default function Contact() {
   const SOCIAL_LINKS = [
@@ -25,9 +25,36 @@ export default function Contact() {
       id: "email",
       name: "Email",
       icon: <Mail size={24} />,
-      href: "#contact-form", // scroll to the form section
+      href: "#contact-form",
     },
   ];
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formObject = new FormData(form);
+
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formObject,
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      alert("Failed to send message. Please try again.");
+    }
+  };
 
   return (
     <section id="contact" className="px-6 py-20 text-white">
@@ -39,26 +66,28 @@ export default function Contact() {
           Have a project in mind or just want to chat? Feel free to reach out!
         </p>
 
-        {/* Contact Form */}
         <div className="grid md:grid-cols-2 gap-8">
+          {/* Contact Form */}
           <form
             id="contact-form"
+            onSubmit={handleSubmit}
             className="flex flex-col space-y-4 bg-gray-900 p-6 rounded-xl shadow-lg"
-            onSubmit={(e) => {
-              e.preventDefault();
-              alert("Message sending will be handled via API (Step 2).");
-            }}
           >
+            <input type="hidden" name="access_key" value="e81a4e90-bf94-43bd-867a-4837a4fd9551" />
+
             <div>
               <label htmlFor="name" className="text-sm font-medium">
                 Name
               </label>
               <input
                 type="text"
-                id="name"
                 name="name"
                 placeholder="Your name"
                 required
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 className="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200"
               />
             </div>
@@ -69,10 +98,13 @@ export default function Contact() {
               </label>
               <input
                 type="email"
-                id="email"
                 name="email"
                 placeholder="your.email@example.com"
                 required
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
                 className="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200"
               />
             </div>
@@ -82,11 +114,14 @@ export default function Contact() {
                 Message
               </label>
               <textarea
-                id="message"
                 name="message"
                 placeholder="Tell me about your project..."
                 rows={4}
                 required
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
                 className="w-full mt-1 p-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-200"
               ></textarea>
             </div>
