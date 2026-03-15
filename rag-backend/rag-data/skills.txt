@@ -1,0 +1,19 @@
+Programming skills:
+Python
+JavaScript
+C++
+Java
+SQL
+
+AI/ML skills:
+NumPy
+Pandas
+Neural Networks
+Computer Vision
+Natural Language Processing
+
+Web development:
+React
+Node.js
+TailwindCSS
+REST APIs

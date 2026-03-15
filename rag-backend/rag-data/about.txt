@@ -1,0 +1,6 @@
+Shlok Nanhoriya is a BTech Computer Science student from India.
+
+He is passionate about artificial intelligence, machine learning,
+and software engineering.
+
+His goal is to build AI systems capable of predicting stock markets.

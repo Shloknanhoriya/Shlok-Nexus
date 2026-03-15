@@ -1,0 +1,6 @@
+Shlok has worked on several projects including:
+
+AI accident detection system
+Hand gesture recognition using computer vision
+AI-powered portfolio chatbot
+Stock market prediction research project
