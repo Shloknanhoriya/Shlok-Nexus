@@ -97,7 +97,7 @@ narwhals==1.45.0
 nest-asyncio==1.5.8
 networkx==3.5
 numpy==1.26.4
-onnxruntime==1.23.2
+onnxruntime>=1.24.0
 openai==2.28.0
 orjson==3.10.18
 packaging==25.0
