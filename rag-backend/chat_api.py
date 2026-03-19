@@ -2,14 +2,10 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-# Removed print statement to avoid exposing API key
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
-
 from openai import OpenAI
 
 
@@ -39,24 +35,19 @@ app.add_middleware(
 
 
 # -----------------------------
-# EMBEDDINGS
+# LOAD RAG DATA AS CONTEXT
 # -----------------------------
 
-embeddings = FastEmbedEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+def load_context():
+    folder = "rag-data"
+    texts = []
+    for file in os.listdir(folder):
+        filepath = os.path.join(folder, file)
+        with open(filepath, "r", encoding="utf-8") as f:
+            texts.append(f.read())
+    return "\n\n".join(texts)
 
-
-# -----------------------------
-# VECTOR DATABASE
-# -----------------------------
-
-db = Chroma(
-    persist_directory="./vector_db",
-    embedding_function=embeddings
-)
-
-retriever = db.as_retriever(search_kwargs={"k": 2})
+CONTEXT = load_context()
 
 
 # -----------------------------
@@ -68,14 +59,6 @@ class Question(BaseModel):
 
 
 # -----------------------------
-# HELPER
-# -----------------------------
-
-def format_docs(docs):
-    return "\n\n".join(doc.page_content for doc in docs)
-
-
-# -----------------------------
 # API ENDPOINT
 # -----------------------------
 
@@ -83,15 +66,12 @@ def format_docs(docs):
 async def chat(q: Question):
 
     try:
-        docs = retriever.invoke(q.question)
-        context = format_docs(docs)
-
         response = client.chat.completions.create(
             model="microsoft/phi-3-mini-4k-instruct",
             messages=[
                 {
-            "role": "system",
-            "content": """
+                    "role": "system",
+                    "content": f"""
 You are Shlok's AI assistant.
 
 You only answer questions about Shlok Nanhoriya.
@@ -101,6 +81,9 @@ Important information about Shlok:
 - He is passionate about Artificial Intelligence, Machine Learning, and software engineering.
 - He is working on projects in AI/ML, computer vision, and intelligent systems.
 - He also holds a Prabhakar degree in music and works on singing and music composition.
+
+Here is detailed information about Shlok:
+{CONTEXT}
 
 Rules:
 - When describing Shlok, always mention in this order:
@@ -113,8 +96,8 @@ Rules:
 - If the question is unrelated to Shlok, reply:
 "I can only answer questions about Shlok's skills, projects, education, or experience."
 """
-        },
-                {"role": "user", "content": f"Context:\n{context}\n\nQuestion:\n{q.question}"}
+                },
+                {"role": "user", "content": q.question}
             ],
             max_tokens=108,
             temperature=0.2

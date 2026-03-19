@@ -1,12 +1,5 @@
 fastapi
 uvicorn
 python-dotenv
-langchain
-langchain-community
-langchain-openai
-chromadb
-langchain-chroma
-fastembed==0.3.6
+openai
 pydantic
-httpx
-tiktoken
