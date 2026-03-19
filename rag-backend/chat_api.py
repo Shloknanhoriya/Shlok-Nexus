@@ -2,13 +2,13 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-print("API KEY LOADED:", os.getenv("OPENAI_API_KEY"))
+# Removed print statement to avoid exposing API key
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 
 from openai import OpenAI
 
@@ -42,7 +42,7 @@ app.add_middleware(
 # EMBEDDINGS
 # -----------------------------
 
-embeddings = HuggingFaceEmbeddings(
+embeddings = FastEmbedEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 

@@ -4,9 +4,9 @@ python-dotenv
 langchain
 langchain-community
 langchain-openai
-sentence-transformers
-faiss-cpu
-onnxruntime>=1.24.0
+chromadb
+langchain-chroma
+fastembed
 pydantic
 httpx
 tiktoken

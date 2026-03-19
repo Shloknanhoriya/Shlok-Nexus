@@ -1,8 +1,12 @@
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
-import os
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 
 documents = []
 
@@ -19,7 +23,7 @@ text_splitter = CharacterTextSplitter(
 
 docs = text_splitter.split_documents(documents)
 
-embeddings = HuggingFaceEmbeddings(
+embeddings = FastEmbedEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
