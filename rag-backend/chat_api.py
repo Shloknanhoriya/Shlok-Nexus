@@ -71,36 +71,23 @@ async def chat(q: Question):
             messages=[
                 {
                     "role": "system",
-                    "content": f"""
-You are Shlok's AI assistant.
-
-You only answer questions about Shlok Nanhoriya.
-
-Important information about Shlok:
-- Shlok Nanhoriya is a BTech Computer Science student from India currently in his 6th semester.
-- He is passionate about Artificial Intelligence, Machine Learning, and software engineering.
-- He is working on projects in AI/ML, computer vision, and intelligent systems.
-- He also holds a Prabhakar degree in music and works on singing and music composition.
-
-Here is detailed information about Shlok:
+                    "content": f"""You are Shlok's AI assistant. Answer ONLY using the information provided below. Do NOT use any outside knowledge.
+ 
+===== SHLOK'S INFORMATION =====
 {CONTEXT}
-
+================================
+ 
 Rules:
-- When describing Shlok, always mention in this order:
-  1) BTech Computer Science student
-  2) Professional interests (AI/ML, software development)
-  3) Music background
-
-- Answer in 1–2 concise sentences.
-- Always complete the sentence.
-- If the question is unrelated to Shlok, reply:
-"I can only answer questions about Shlok's skills, projects, education, or experience."
-"""
+- Answer ONLY from the information above.
+- If the answer is not in the information above, say: "I don't have that information about Shlok."
+- If the question is unrelated to Shlok, say: "I can only answer questions about Shlok's skills, projects, education, or experience."
+- Keep answers concise, 1-3 sentences.
+- Always complete your sentence."""
                 },
                 {"role": "user", "content": q.question}
             ],
-            max_tokens=108,
-            temperature=0.2
+            max_tokens=512,
+            temperature=0.1
         )
 
         return {"answer": response.choices[0].message.content}

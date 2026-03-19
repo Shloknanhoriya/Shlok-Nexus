@@ -17,3 +17,10 @@ React
 Node.js
 TailwindCSS
 REST APIs
+
+Soft Skills:
+Communication
+Teamwork
+Time Management
+Problem Solving
+Adaptability

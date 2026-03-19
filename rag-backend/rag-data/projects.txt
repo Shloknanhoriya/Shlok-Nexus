@@ -1,6 +1,9 @@
 Shlok has worked on several projects including:
 
+Municipal RAG Assistant
+Vocational Training Recommendation System
 AI accident detection system
 Hand gesture recognition using computer vision
 AI-powered portfolio chatbot
+AI Music Generator
 Stock market prediction research project
