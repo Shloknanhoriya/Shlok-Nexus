@@ -3,11 +3,11 @@ import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import MLA from "@/assets/MLA.jpg";
-import projectAI from "@/assets/project-ai.jpg";
-import projectWeb from "@/assets/project-web.jpg";
 import projectMusic from "@/assets/project-music.jpg";
 import Portfolio from "@/assets/portfolio.jpg";
-type ProjectCategory = "All" | "AI" | "Web" | "Music" | "ML";
+import Recom from "@/assets/recom.jpg";
+
+type ProjectCategory = "All" | "ML" | "Web" | "Music" ;
 
 const Projects = () => {
   const ref = useRef(null);
@@ -24,8 +24,6 @@ const Projects = () => {
   const handleToggleShowAll = () => {
     const wasShowingAll = showAll;
     setShowAll((prev) => !prev);
-    
-    // If collapsing, scroll to button after a brief delay to allow DOM update
     if (wasShowingAll && buttonRef.current) {
       setTimeout(() => {
         buttonRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -38,10 +36,10 @@ const Projects = () => {
       title: "Municipal Law Assistant",
       description: "AI chatbot that detects emotional signals and generates context-appropriate responses using LLMs",
       image: MLA,
-      category: "AI",
+      category: "ML",
       tags: ["Python", "FastAPI", "NLP", "LLM"],
-      github: "#",
-      demo: "#",
+      github: "https://github.com/Shloknanhoriya/municipal-law-assistant",
+      demo: "https://municipal-law-assistant.vercel.app/",
     },
     {
       title: "Portfolio Website",
@@ -49,77 +47,30 @@ const Projects = () => {
       image: Portfolio,
       category: "Web",
       tags: ["React", "TypeScript", "Tailwind CSS"],
-      github: "#",
-      demo: "#",
+      github: "https://github.com/Shloknanhoriya/Shlok-Nexus",
+      demo: "https://shlok-nexus.vercel.app/",
     },
     {
-      title: "System (Personal Training Website)",
-      description: "Personal training website for managing fitness goals and tracking progress",
-      image: projectWeb,
-      category: "Web",
+      title: "Vocational Training Recommender",
+      description: "Website for recommending vocational training programs based on user interests and local availability",
+      image: Recom,
+      category: "ML",
       tags: ["React", "Node.js", "REST APIs"],
-      github: "#",
-      demo: "#",
+      github: "https://github.com/Shloknanhoriya/Recommend-Vocational-Course",
+      demo: "https://vocational-course-recommender.streamlit.app",
     },
     {
       title: "AI Music Generator",
-      description: "Machine learning model that generates original music compositions",
+      description: "Machine learning model that generates original music compositions when given a Lyrics input",
       image: projectMusic,
       category: "Music",
       tags: ["Python", "MIDI", "ML"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "House Price Prediction",
-      description:
-        "Linear regression model that predicts house prices using square footage along with bedroom and bathroom counts",
-      image: projectAI,
-      category: "ML",
-      tags: ["Python", "Pandas", "Linear Regression"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "Customer Segmentation with K-Means",
-      description:
-        "K-means clustering pipeline that groups retail customers based on historical purchase behavior",
-      image: projectAI,
-      category: "ML",
-      tags: ["Python", "Scikit-learn", "Clustering"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "Cats vs Dogs Classifier",
-      description: "Support Vector Machine model trained to classify cat and dog images with high accuracy",
-      image: projectAI,
-      category: "ML",
-      tags: ["Python", "SVM", "Image Processing"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "Hand Gesture Recognition",
-      description: "Computer vision project that recognizes and labels different hand gestures in real time",
-      image: projectAI,
-      category: "ML",
-      tags: ["Python", "OpenCV", "Deep Learning"],
-      github: "#",
-      demo: "#",
-    },
-    {
-      title: "Food Calories Estimator",
-      description: "Image-processing pipeline that estimates food calories by detecting items from plate photos",
-      image: projectAI,
-      category: "ML",
-      tags: ["Python", "CNN", "Nutrition"],
-      github: "#",
+      github: "https://github.com/Shloknanhoriya/SonicForge-AI",
       demo: "#",
     },
   ];
 
-  const categories: ProjectCategory[] = ["All", "AI", "Web", "Music", "ML"];
+  const categories: ProjectCategory[] = ["All", "ML", "Web", "Music"];
 
   const filteredProjects =
     filter === "All" ? projects : projects.filter((p) => p.category === filter);
@@ -188,13 +139,24 @@ const Projects = () => {
                     ))}
                   </div>
                   <div className="flex gap-3">
-                    <Button variant="outline" size="sm" className="flex-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => window.open(project.github, "_blank")}
+                    >
                       <Github className="h-4 w-4 mr-2" />
                       Code
                     </Button>
-                    <Button variant="default" size="sm" className="flex-1">
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => project.demo !== "#" && window.open(project.demo, "_blank")}
+                      disabled={project.demo === "#"}
+                    >
                       <ExternalLink className="h-4 w-4 mr-2" />
-                      Demo
+                      {project.demo === "#" ? "Coming Soon" : "Demo"}
                     </Button>
                   </div>
                 </div>

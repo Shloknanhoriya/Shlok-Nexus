@@ -10,25 +10,25 @@ const About = () => {
 
   const timeline = [
     {
-      year: "2024",
+      year: "2026",
       title: "AI & ML Journey",
-      description: "Diving deep into machine learning and autonomous systems",
+      description: "Diving into machine learning and autonomous systems",
       icon: Cpu,
     },
     {
-      year: "2023",
-      title: "Full Stack Development",
-      description: "Building modern web applications with cutting-edge tech",
+      year: "2025",
+      title: "Data Structures",
+      description: "Mastering the fundamentals of programming and problem-solving",
       icon: Code,
     },
     {
-      year: "2022",
-      title: "Music Production",
-      description: "Creating and producing original music compositions",
+      year: "2024",
+      title: "Full Stack Development",
+      description: "Building modern web applications with cutting-edge tech",
       icon: Music,
     },
     {
-      year: "2021",
+      year: "2023",
       title: "Engineering Studies",
       description: "Started my journey in technology and innovation",
       icon: GraduationCap,
