@@ -6,7 +6,7 @@ langchain-community
 langchain-openai
 chromadb
 langchain-chroma
-fastembed==0.2.7
+fastembed==0.3.6
 pydantic
 httpx
 tiktoken
