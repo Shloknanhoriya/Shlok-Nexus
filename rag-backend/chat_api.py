@@ -7,6 +7,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
+import httpx
+import asyncio
 
 
 # -----------------------------
@@ -51,6 +53,35 @@ CONTEXT = load_context()
 
 
 # -----------------------------
+# KEEP ALIVE PING
+# -----------------------------
+
+async def keep_alive():
+    await asyncio.sleep(60)  # wait 1 min after startup
+    while True:
+        try:
+            async with httpx.AsyncClient() as http:
+                await http.get("https://shlok-nexus-backend.onrender.com/ping", timeout=10)
+                print("Keep-alive ping sent")
+        except Exception as e:
+            print("Ping failed:", e)
+        await asyncio.sleep(600)  # ping every 10 minutes
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(keep_alive())
+
+
+# -----------------------------
+# PING ENDPOINT
+# -----------------------------
+
+@app.get("/ping")
+async def ping():
+    return {"status": "alive"}
+
+
+# -----------------------------
 # REQUEST MODEL
 # -----------------------------
 
@@ -72,11 +103,11 @@ async def chat(q: Question):
                 {
                     "role": "system",
                     "content": f"""You are Shlok's AI assistant. Answer ONLY using the information provided below. Do NOT use any outside knowledge.
- 
+
 ===== SHLOK'S INFORMATION =====
 {CONTEXT}
 ================================
- 
+
 Rules:
 - Answer ONLY from the information above.
 - If the answer is not in the information above, say: "I don't have that information about Shlok."
