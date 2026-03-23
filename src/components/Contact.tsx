@@ -60,10 +60,10 @@ export default function Contact() {
   return (
     <section id="contact" className="px-6 py-20 text-white">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-4">
-          Get In <span className="text-gradient">Touch</span>
+        <h2 className="text-4xl font-bold text-center mb-4 text-gray-900 dark:text-white">
+  Get In <span className="bg-gradient-primary bg-clip-text text-transparent">Touch</span>
         </h2>
-        <p className="text-center text-gray-400 mb-10">
+        <p className="text-center text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm mb-10">
           Have a project in mind or just want to chat? Feel free to reach out!
         </p>
 

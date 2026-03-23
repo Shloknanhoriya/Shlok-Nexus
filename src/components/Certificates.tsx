@@ -142,7 +142,7 @@ const Certificates = () => {
               & Courses
             </span>
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-gray-900 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
             A collection of certifications and courses that strengthen my skills in AI,
             web development, robotics, and beyond.
           </p>

@@ -20,7 +20,7 @@ const Footer = () => {
             <h3 className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-3">
               Shlok Nanhoriya
             </h3>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm">
               AI & ML Engineer • Musician • Creator
             </p>
           </div>
@@ -32,9 +32,10 @@ const Footer = () => {
               {quickLinks.map((link) => (
                 <a
                   key={link.label}
-                  href={link.href}
-                  className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                >
+  href={link.href}
+  className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm"
+>
+
                   {link.label}
                 </a>
               ))}
@@ -44,10 +45,10 @@ const Footer = () => {
           {/* Contact Info */}
           <div>
             <h4 className="font-semibold mb-3">Get In Touch</h4>
-            <p className="text-muted-foreground text-sm mb-2">
+            <p className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm mb-2">
               Email: nanhoriyashlok@gmail.com
             </p>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm">
               Based in India
             </p>
           </div>

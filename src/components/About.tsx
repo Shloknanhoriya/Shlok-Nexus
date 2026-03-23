@@ -73,12 +73,12 @@ const About = () => {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="space-y-6"
             >
-              <p className="text-lg text-foreground leading-relaxed">
+              <p className="text-lg text-gray-900 dark:text-gray-300 leading-relaxed">
                 I'm a passionate AI & ML engineer in the making, combining my love for
                 technology with creative expression through music. My journey bridges the gap
                 between artificial intelligence, autonomous systems, and artistic innovation.
               </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-lg text-gray-900 dark:text-gray-300 leading-relaxed">
                 When I'm not training neural networks or building intelligent systems, you'll
                 find me composing music or exploring the intersection of technology and art.
                 I believe in creating solutions that not only solve problems but inspire
@@ -113,7 +113,7 @@ const About = () => {
                     </div>
                     <div className="text-sm text-primary font-semibold mb-2">{item.year}</div>
                     <h4 className="text-lg font-bold mb-2">{item.title}</h4>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-400">{item.description}</p>
                   </motion.div>
                 );
               })}

@@ -52,7 +52,7 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-xl md:text-2xl lg:text-3xl text-muted-foreground max-w-3xl mx-auto"
+            className="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto"
           >
             AI & ML Engineer • Musician • Creator
           </motion.p>

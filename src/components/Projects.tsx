@@ -90,7 +90,7 @@ const Projects = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-8">
             Featured <span className="bg-gradient-primary bg-clip-text text-transparent">Projects</span>
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-center text-gray-900 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
             Explore my portfolio of innovative projects spanning AI, web development, music, and machine learning
           </p>
 
@@ -127,7 +127,7 @@ const Projects = () => {
                 </div>
                 <div className="p-6">
                   <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground mb-4">{project.description}</p>
+                  <p className="text-gray-900 dark:text-gray-400 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag) => (
                       <span

@@ -30,7 +30,7 @@ const Navbar = () => {
     { href: "#internships", label: "Internships" },
     { href: "#certificates", label: "Certificates" },
     { href: "#projects", label: "Projects" },
-    { href: "#music", label: "Music" },
+    { href: "#extracurricular", label: "More" },
     { href: "#contact", label: "Contact" },
   ];
 

@@ -6,7 +6,7 @@ import Projects from "@/components/Projects";
 import Internships from "@/components/Internships";
 import Certificates from "@/components/Certificates";
 import Showcase from "@/components/Showcase";
-import Music from "@/components/Music";
+import Music from "@/components/ExtracurricularActivities";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import TypewriterText from "@/components/TypewriterText";
