@@ -12,9 +12,10 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
-
+import { useState } from "react";
 const App = () => {
   useFluidCursor();
+  const [highlightEmail, setHighlightEmail] = useState(false);
   return(
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -27,7 +28,15 @@ const App = () => {
 
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route 
+  path="/" 
+  element={
+    <Index 
+      setHighlightEmail={setHighlightEmail}
+      highlightEmail={highlightEmail}
+    />
+  } 
+/>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

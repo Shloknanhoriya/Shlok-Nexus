@@ -1,6 +1,6 @@
 import { Heart } from "lucide-react";
 
-const Footer = () => {
+const Footer = ({ highlightEmail }: any) => {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
@@ -23,6 +23,10 @@ const Footer = () => {
             <p className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm">
               AI & ML Engineer • Musician • Creator
             </p>
+            <p className="text-xs text-gray-500 mt-1">
+  🎓 B.Tech CSE – Lovely Professional University, Punjab <br />
+  🏫 Matriculation & Higher Secondary – D.A.V Public School, Nigahi
+</p>
           </div>
 
           {/* Quick Links */}
@@ -45,9 +49,15 @@ const Footer = () => {
           {/* Contact Info */}
           <div>
             <h4 className="font-semibold mb-3">Get In Touch</h4>
-            <p className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm mb-2">
-              Email: nanhoriyashlok@gmail.com
-            </p>
+            <p
+  className={`text-sm mb-2 transition-all duration-500 ${
+    highlightEmail
+      ? "text-primary scale-110 font-semibold"
+      : "text-gray-900 dark:text-gray-400 hover:text-primary"
+  }`}
+>
+  Email: nanhoriyashlok@gmail.com
+</p>
             <p className="text-gray-900 dark:text-gray-400 hover:text-primary transition-colors text-sm">
               Based in India
             </p>

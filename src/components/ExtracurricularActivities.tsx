@@ -6,47 +6,12 @@ import {
   Music2,
   ChevronLeft,
   ChevronRight,
-  Award,
   ChevronDown,
   ChevronUp,
   Headphones,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// ─── Certificate Data ────────────────────────────────────────────────────────
-const certificates = [
-  {
-    id: 1,
-    title: "Prabhakar Degree",
-    subtitle: "Classical Music – Sangeet Prabhakar",
-    issuer: "Prayag Sangeet Samiti",
-    year: "2023",
-    // Replace with your actual image path, e.g. "/certs/prabhakar.jpg"
-    image: null,
-    color: "from-cyan-500/20 to-blue-600/20",
-    accent: "#22d3ee",
-  },
-  {
-    id: 2,
-    title: "Music Certificate II",
-    subtitle: "Intermediate Classical Vocals",
-    issuer: "Prayag Sangeet Samiti",
-    year: "2021",
-    image: null,
-    color: "from-violet-500/20 to-purple-700/20",
-    accent: "#a78bfa",
-  },
-  {
-    id: 3,
-    title: "Music Certificate I",
-    subtitle: "Foundation in Classical Music",
-    issuer: "Prayag Sangeet Samiti",
-    year: "2019",
-    image: null,
-    color: "from-pink-500/20 to-fuchsia-600/20",
-    accent: "#f472b6",
-  },
-];
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 // ─── Track Data ───────────────────────────────────────────────────────────────
 const tracks = [
@@ -116,7 +81,7 @@ const MusicPlayer = () => {
 
           <div className="text-center space-y-4">
             <Music2 className="h-20 w-20 text-primary mx-auto animate-float" />
-            <p className="text-lg text-muted-foreground">Music Player Demo</p>
+            <p className="text-lg text-gray-700 dark:text-gray-300">Music Player Demo</p>
             <p className="text-sm text-primary/80">{currentTrack.name}</p>
             <Button variant="hero" size="lg" onClick={togglePlayback}>
               {isPlaying ? <Pause className="h-5 w-5 mr-2" /> : <Play className="h-5 w-5 mr-2" />}
@@ -146,7 +111,7 @@ const MusicPlayer = () => {
       {/* Progress Bar */}
       <div className="p-6">
         <h3 className="text-2xl font-bold mb-2">Latest Composition</h3>
-        <p className="text-muted-foreground mb-4">
+        <p className="text-gray-700 dark:text-gray-400 mb-4">
           An experimental blend of electronic and orchestral elements.
         </p>
         <div className="space-y-3">
@@ -161,7 +126,7 @@ const MusicPlayer = () => {
             }}
             className="w-full accent-primary cursor-pointer"
           />
-          <div className="flex justify-between text-sm text-muted-foreground">
+          <div className="flex justify-between text-sm text-gray-700 dark:text-gray-400">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -170,11 +135,16 @@ const MusicPlayer = () => {
 
       {/* Platform Buttons */}
       <div className="pb-6 text-center">
-        <p className="text-muted-foreground mb-4">Coming Soon...</p>
+        <p className="text-gray-700 dark:text-gray-400 mb-4">More ↓</p>
         <div className="flex flex-wrap justify-center gap-3">
-          <Button variant="glass">Spotify</Button>
-          <Button variant="glass">YouTube</Button>
-        </div>
+  <a
+    href="https://www.instagram.com/musician_shlok/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <Button variant="glass">Instagram</Button>
+  </a>
+</div>
       </div>
     </div>
   );
@@ -202,66 +172,104 @@ const ExtracurricularActivities = () => {
               Activities
             </span>
           </h2>
-          <p className="text-center text-gray-900 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
-            Beyond engineering — a formal journey through music and creative expression.
+          <p className="text-center text-gray-700 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+            Beyond engineering — a formal journey through classical music and creative expression.
           </p>
 
-          {/* Certificate Cards */}
+          {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
-            {certificates.map((cert, i) => (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ delay: 0.15 * i, duration: 0.5 }}
-                className={`relative rounded-2xl border border-border/50 bg-gradient-to-br ${cert.color} backdrop-blur-sm p-6 shadow-elegant flex flex-col gap-4 hover:scale-[1.02] transition-transform duration-300`}
-              >
-                {/* Certificate image or placeholder */}
-                <div className="w-full h-36 rounded-xl bg-card/40 flex items-center justify-center border border-border/30 overflow-hidden">
-                  {cert.image ? (
-                    <img
-                      src={cert.image}
-                      alt={cert.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center gap-2 opacity-50">
-                      <Award
-                        className="h-12 w-12"
-                        style={{ color: cert.accent }}
-                      />
-                      <span className="text-xs text-muted-foreground">
-                        Certificate Image
-                      </span>
-                    </div>
-                  )}
-                </div>
 
-                {/* Info */}
-                <div>
-                  <h3
-                    className="text-lg font-bold leading-tight"
-                    style={{ color: cert.accent }}
+            {/* Certificate Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              className="relative rounded-2xl border border-border/50 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 backdrop-blur-sm p-6 shadow-elegant flex flex-col gap-4 hover:scale-[1.02] transition-transform duration-300"
+            >
+              <Dialog>
+  <DialogTrigger asChild>
+    <div className="w-full h-36 rounded-xl bg-card/40 border border-border/30 overflow-hidden cursor-pointer hover:opacity-80 transition-opacity duration-200 relative group">
+      <img
+        src="/certs/Prabhakar.jpg"
+        alt="Prabhakar Certificate"
+        className="w-full h-full object-cover"
+style={{ objectPosition: "0% 10%" }}
+      />
+      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center rounded-xl">
+        <span className="text-white text-xs font-semibold">🔍 Click to view</span>
+      </div>
+    </div>
+  </DialogTrigger>
+  <DialogContent className="max-w-3xl">
+    <img
+      src="/certs/Prabhakar.jpg"
+      alt="Prabhakar Certificate full view"
+      className="w-full h-auto object-contain max-h-[80vh]"
+    />
+  </DialogContent>
+</Dialog>
+              <div>
+                <h3 className="text-lg font-bold leading-tight" style={{ color: "#22d3ee" }}>
+                  Prabhakar Degree
+                </h3>
+                <p className="text-sm text-foreground/80 mt-1">Classical Music – Sangeet Prabhakar</p>
+                <div className="flex items-center justify-between mt-3">
+                  <span className="text-xs text-gray-700 dark:text-gray-400">Prayag Sangeet Samiti</span>
+                  <span
+                    className="text-xs font-semibold px-2 py-0.5 rounded-full border"
+                    style={{ color: "#22d3ee", borderColor: "#22d3ee40", background: "#22d3ee15" }}
                   >
-                    {cert.title}
-                  </h3>
-                  <p className="text-sm text-foreground/80 mt-1">{cert.subtitle}</p>
-                  <div className="flex items-center justify-between mt-3">
-                    <span className="text-xs text-gray-900 dark:text-gray-400">{cert.issuer}</span>
-                    <span
-                      className="text-xs font-semibold px-2 py-0.5 rounded-full border"
-                      style={{
-                        color: cert.accent,
-                        borderColor: `${cert.accent}40`,
-                        background: `${cert.accent}15`,
-                      }}
-                    >
-                      {cert.year}
-                    </span>
-                  </div>
+                    2022
+                  </span>
                 </div>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
+
+            {/* About Prabhakar Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="relative rounded-2xl border border-border/50 bg-gradient-to-br from-violet-500/20 to-purple-700/20 backdrop-blur-sm p-6 shadow-elegant flex flex-col gap-3 hover:scale-[1.02] transition-transform duration-300"
+            >
+              <h3 className="text-lg font-bold" style={{ color: "#a78bfa" }}>
+                About the Degree
+              </h3>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                The <strong>Sangeet Prabhakar</strong> is a prestigious classical music diploma
+                awarded by Prayag Sangeet Samiti, Allahabad — one of India's most respected music
+                examination bodies. It represents advanced proficiency in Hindustani classical
+                music and is equivalent to a graduate-level music qualification.
+              </p>
+            </motion.div>
+
+            {/* Instruments Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ delay: 0.45, duration: 0.5 }}
+              className="relative rounded-2xl border border-border/50 bg-gradient-to-br from-pink-500/20 to-fuchsia-600/20 backdrop-blur-sm p-6 shadow-elegant flex flex-col gap-4 hover:scale-[1.02] transition-transform duration-300"
+            >
+              <h3 className="text-lg font-bold" style={{ color: "#f472b6" }}>
+                Instruments I Play
+              </h3>
+              <div className="flex flex-col gap-3">
+                {[
+                  { emoji: "🎹", name: "Keyboard (Piano)" },
+                  { emoji: "🎸", name: "Guitar" },
+                  { emoji: "🪗", name: "Harmonium" },
+                ].map((instrument) => (
+                  <div
+                    key={instrument.name}
+                    className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-card/40 border border-border/30 text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    <span className="text-xl">{instrument.emoji}</span>
+                    <span>{instrument.name}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
           </div>
 
           {/* Music Player Accordion */}
@@ -284,15 +292,15 @@ const ExtracurricularActivities = () => {
                   <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
                     🎵 My Music Compositions
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-700 dark:text-gray-400">
                     Click to {playerOpen ? "collapse" : "expand"} the music player
                   </p>
                 </div>
               </div>
               {playerOpen ? (
-                <ChevronUp className="h-5 w-5 text-muted-foreground" />
+                <ChevronUp className="h-5 w-5 text-gray-700 dark:text-gray-400" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                <ChevronDown className="h-5 w-5 text-gray-700 dark:text-gray-400" />
               )}
             </button>
 
@@ -312,6 +320,7 @@ const ExtracurricularActivities = () => {
               )}
             </AnimatePresence>
           </motion.div>
+
         </motion.div>
       </div>
     </section>

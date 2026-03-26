@@ -11,7 +11,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import TypewriterText from "@/components/TypewriterText";
 
-const Index = () => {
+const Index = ({ setHighlightEmail, highlightEmail }: any) => {
   return (
     <div className="min-h-screen bg-transparent">
 
@@ -24,8 +24,8 @@ const Index = () => {
       <Projects />
       <Showcase />
       <Music />
-      <Contact />
-      <Footer />
+      <Contact setHighlightEmail={setHighlightEmail} />
+<Footer highlightEmail={highlightEmail} />
     </div>
   );
 };

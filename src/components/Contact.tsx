@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Github, Linkedin, Instagram, Mail } from "lucide-react";
+export default function Contact({ setHighlightEmail }: any){
 
-export default function Contact() {
   const SOCIAL_LINKS = [
     {
       id: "github",
@@ -15,12 +15,7 @@ export default function Contact() {
       icon: <Linkedin size={24} />,
       href: "https://www.linkedin.com/in/shlok-nanhoriya/",
     },
-    {
-      id: "instagram",
-      name: "Instagram",
-      icon: <Instagram size={24} />,
-      href: "https://www.instagram.com/musician_shlok/",
-    },
+    
     {
       id: "email",
       name: "Email",
@@ -144,22 +139,27 @@ export default function Contact() {
             <h3 className="text-xl font-semibold mb-4">Connect With Me</h3>
 
             {SOCIAL_LINKS.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                {...(link.id !== "email"
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className="flex items-center gap-4 p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
-              >
-                
-                <div className="text-purple-400">{link.icon}</div>
-                
-                <span>{link.name}</span>
-              </a>
-              
-            ))}
-            <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 rounded-xl p-5 mt-4">
+  <a
+    key={link.id}
+    href={link.href}
+    onClick={() => {
+      if (link.id === "email") {
+        setHighlightEmail(true);
+
+        // remove highlight after 2 sec
+        setTimeout(() => setHighlightEmail(false), 2000);
+      }
+    }}
+    {...(link.id !== "email"
+      ? { target: "_blank", rel: "noopener noreferrer" }
+      : {})}
+    className="flex items-center gap-4 p-3 rounded-lg bg-gray-800 hover:bg-gray-700 transition"
+  >
+    <div className="text-purple-400">{link.icon}</div>
+    <span>{link.name}</span>
+  </a>
+))}
+            <div className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 rounded-xl p-5 mt-6">
 
               <h3 className="text-white font-semibold mb-2">My Resume</h3>
               <p className="text-gray-400 text-sm mb-4">
